@@ -1,42 +1,17 @@
-# LUCA BUBU: Pet Trail Explorer
+# Personal Music Album and Review Platform
 
-*“Find your next favorite walk — tails welcome.”*
+## Project Objectives
+The project aims to develop a user-friendly online platform for managing personal music album collections. The system will allow users to record detailed listening notes, ratings, and reviews while providing personalized album recommendations based on individual tastes and listening history. Additionally, the platform will expand to include other media categories such as TV series and movies, serving as a comprehensive hub for all entertainment interests. The goal is to foster a community where users can engage, share insights, and discover new media effortlessly.
 
-## Project Scope
-LUCA BUBU is a digital trail map designed to help pet owners in Bellevue discover the best pet-friendly parks and walking paths. The platform curates trails based on verified public data, highlighting key features such as leash zones, pet amenities, walk difficulty, and scenic routes. Whether it's a quick potty break or an extended weekend hike, LUCA BUBU simplifies the search for an ideal trail for you and your furry friend.
+## Target Users and Their Needs
+The primary users include music enthusiasts who need an organized and interactive way to catalog and review their favorite albums, as well as media aficionados looking for a single platform to manage diverse types of content. Casual listeners will benefit from an intuitive tool that tracks their listening habits and simplifies content discovery, while critics and reviewers will appreciate robust features for in-depth analysis and community engagement. Overall, the platform is designed to address the needs of a broad audience interested in enhancing their media consumption experience.
 
-## Target Users
-- **Dog Owners:** Especially new residents looking for trusted walking spots.
-- **Busy Pet Parents:** In need of quick and reliable trail recommendations.
-- **Seniors & Families:** Seeking safe and easily navigable paths.
-- **Pet Sitters & Dog Walkers:** Requiring dependable, pet-friendly routes.
-- **Visitors:** Exploring Bellevue with their pets for leisure and sightseeing.
+## Key Deliverables
+Key deliverables include a responsive web application (with an optional mobile app) that allows users to add, edit, and delete entries for music albums, TV series, and movies. The platform will feature a secure user account system, modules for detailed note-taking, rating, and reviewing, and a recommendation engine that suggests new media based on user data. Additional deliverables may include community features such as forums or social media integration to encourage interactive discussions and sharing.
 
-## Features
-- **Interactive Web Map:** Easily browse Bellevue's pet-friendly trails.
-- **Trail Filters:** Search by distance, terrain, leash rules, shade, water fountain availability, and more.
-- **Icon Markers:** Clearly identify pet-specific amenities like bathrooms, water stations, and dog parks.
-- **Bookmark & Log Functionality:** Save your favorite trails and maintain a walking history.
-- **Accessibility Info:** Includes ADA-accessible routes wherever available.
-- **Verified Data:** All trail and amenity information is sourced from accurate, public data ensuring safe recommendations.
+## Special Constraints
+The project must adhere to strict regulatory and compliance standards, such as data protection regulations (e.g., GDPR) to ensure user privacy and security. It is essential to respect intellectual property rights by complying with copyright laws related to media content. The design should also meet accessibility standards (e.g., WCAG) to provide an inclusive user experience. Moreover, the system must be built with a scalable architecture to accommodate a growing user base and increasing data volume over time.
 
-## Timeline
-The project runs from **April 11, 2025** to **June 20, 2025**.
-
-| Phase                            | Date Range                 | Duration   | Tasks                                                             |
-| -------------------------------- | -------------------------- | ---------- | ----------------------------------------------------------------- |
-| **Phase 1: Research & Planning** | April 11 - April 18, 2025  | 1 week     | Gather requirements and compile public data resources             |
-| **Phase 2: Design & Prototyping**| April 19 - April 29, 2025  | 1.5 weeks  | Develop user flows, wireframes, and initial UI designs              |
-| **Phase 3: Development**         | April 30 - May 20, 2025    | 3 weeks    | Implement interactive map features, filters, and marker systems     |
-| **Phase 4: Testing & Refinement**| May 21 - June 3, 2025      | 2 weeks    | Conduct user testing and refine features                          |
-| **Phase 5: Deployment & Wrap-up**| June 4 - June 20, 2025     | 2 weeks    | Final deployment, documentation, and post-launch updates           |
-
-
-## Contact Information
-**Team LUCA BUBU**  
-Got questions or ideas? Reach out to me!
-
----
-
-Let's get out there and explore some pawsome trails together! 🐾✨
+## Expected Outcome
+The expected outcome is a fully functional, intuitive, and scalable platform that enhances how users manage, review, and discover media content. By offering personalized recommendations and fostering community interactions, the system will improve user engagement and satisfaction. Over time, the platform is expected to evolve, incorporating additional media categories and advanced features while maintaining compliance with regulatory and accessibility standards.
 # TECHIN510Developer
