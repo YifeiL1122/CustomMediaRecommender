@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Search</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title-container">
+        <div class="logo">
+          <h1>MyReelShelf</h1>
+          <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="Logo" class="logo-icon" />
+        </div>
+        <p class="subtitle">find next favorite movies</p>
+      </div>
+    </header>
+    
+    <main>
+      <div class="movie-input-section">
+        <h2>To teach Shelf what you like,</h2>
+        <p>please type in 3 films that you already know and like.</p>
+        <p class="subtitle-text">Here are 3 of my favorite movies...</p>
+        
+        <div class="movie-inputs">
+          <input type="text" class="movie-input" placeholder="enter a movie title" />
+          <input type="text" class="movie-input" placeholder="enter a movie title" />
+          <input type="text" class="movie-input" placeholder="enter a movie title" />
+        </div>
+        
+        <button class="continue-btn" type="button">continue</button>
+      </div>
+    </main>
+  </div>
+  
+  <div class="poster-background"></div>
+  
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

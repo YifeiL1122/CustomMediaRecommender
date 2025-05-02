@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieAnalysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"></script>
+</head>
+<body>
+    <!-- 确保 poster-background 元素存在 -->
+    <div class="poster-background"></div>
+    
+    <div class="container">
+        <header>
+            <div class="title-container">
+                <div class="logo">
+                    <h1>MovieAnalysis</h1>
+                    <img src="{{ url_for('static', filename='images/logo-icon.svg') }}" alt="Logo" class="logo-icon">
+                </div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div id="wordCloud" style="width: 100%; height: 400px; border: 1px solid #eee;"></div>
+            <div class="analysis-text">
+                <div id="analysisResult"></div>
+            </div>
+            <button id="backButton" class="continue-btn">Go Back</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+</body>
+</html>
