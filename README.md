@@ -1,24 +1,25 @@
 # Custom Media Recommender Website
 
-##  Project Scope
+## Project Scope
 
-This project builds a personalized recommendation website for movies or music using user-uploaded collection data and ChatGPT's language capabilities. Users can upload a file containing their favorite media titles, ratings, and watch/listen dates. The backend system parses this file, extracts relevant information, and generates tailored recommendations through the ChatGPT API. The recommendations are then displayed in an intuitive front-end interface, accompanied by visual explanations.
+This project builds a personalized recommendation website for movies using user-entered favorite titles and Gemini AI's language capabilities. Users can enter their favorite movies, and the system generates tailored recommendations through the Gemini API. The recommendations are then displayed in an intuitive front-end interface, accompanied by visual explanations and a word cloud showing common themes.
 
 **Objectives:**
-- Enable personalized content recommendations through simple data upload.
-- Leverage GPT's language reasoning to reflect user taste.
+- Enable personalized content recommendations through simple input.
+- Leverage AI language reasoning to reflect user taste.
 - Provide users with understandable and engaging recommendations.
+- Allow users to manage personal movie lists.
 
 **Boundaries:**
 - Focus on single-user interaction.
-- Only supports file-based input (CSV, JSON, TXT).
+- Supports direct input of movie titles.
 - No authentication, social features, or user accounts in the initial version.
 
 ---
 
 ## Target Users
 
-- Individuals who keep personal lists of movies/music they've consumed.
+- Movie enthusiasts who want to discover new films based on their taste.
 - Users who enjoy receiving smart, tailored suggestions from AI.
 - Non-technical users seeking simple and intuitive recommendation tools.
 
@@ -26,48 +27,47 @@ This project builds a personalized recommendation website for movies or music us
 
 ## Features
 
-- **File Upload Interface**  
-  Upload collection files in CSV, JSON, or TXT formats. Example fields: `Title`, `Rating`, `Date Watched`.
+- **Movie Input Interface**  
+  Enter three favorite movies to receive personalized recommendations.
 
-- **Data Parsing & Cleaning**  
-  Extracts title, genre, and rating from the input file and processes the data for API use.
+- **AI-Powered Analysis**  
+  Google's Gemini AI analyzes common themes, styles, and elements across selected movies.
 
-- **ChatGPT-Powered Recommendations**  
-  A custom prompt is generated to retrieve 5 personalized recommendations with concise reasoning based on the user's past media preferences.
+- **Visual Word Cloud**  
+  Interactive word cloud showing key themes, genres, and elements from your selected movies.
 
-- **Interactive Recommendation Display**  
-  Recommendations are shown in a visually clear and interactive layout. Users can click a recommendation to view more details.
+- **Interactive Recommendation Cards**  
+  Recommendations are shown in a visually clear card layout with movie posters, ratings, genres, and plot information.
 
-- **Visualized API Feedback**  
-  Displays insights into why certain recommendations were made. This could include:
-  - Genre similarity scores
-  - Shared keywords or themes
-  - Rating distribution comparisons
-  - Tag clouds of common descriptors
+- **Personal Movie Lists**  
+  Add recommended movies to your watchlist or mark them as "not interested".
 
-- **Expandable Architecture**  
-  Ready for future features like feedback loops, login systems, history tracking, and music/movie API integration (e.g., Spotify, OMDb).
+- **Background Visual Elements**  
+  Dynamic movie poster background creates an immersive experience.
+
+- **Responsive Design**  
+  Works well on different screen sizes and devices.
 
 ---
 
 ## Timeline
 
-| Week | Milestone                                               |
-|------|---------------------------------------------------------|
-| 1    | Research user needs and define prompt template          |
-| 2    | Implement upload UI and build file parser               |
-| 3    | Integrate ChatGPT API and test recommendation logic     |
-| 4    | Display formatted results in UI                         |
-| 5    | Add interactivity to recommendation cards               |
-| 6    | Implement visualized recommendation insights            |
-| 7    | Conduct user testing and refine the interface           |
-| 8    | Final polishing, deployment, and documentation          |
+| Week | Milestone                                               | Status |
+|------|---------------------------------------------------------|--------|
+| 1    | Research user needs and define Gemini prompt template   | ✅ Complete |
+| 2    | Implement input UI and build movie search functions     | ✅ Complete |
+| 3    | Integrate Gemini API and test recommendation logic      | ✅ Complete |
+| 4    | Display formatted results and word cloud in UI          | ✅ Complete |
+| 5    | Add interactivity to recommendation cards               | ✅ Complete |
+| 6    | Implement personal movie lists and management           | ✅ Complete |
+| 7    | Conduct user testing and refine the interface           | ✅ Complete |
+| 8    | Final polishing and bug fixes                           | ✅ Complete |
 
 ---
 
 ## Contact Information
 
-**Team Member:**
+**Team Members:**
 
 - Jialu Huang
 *Email:* jhuang95@uw.edu
@@ -109,9 +109,10 @@ pip install -r requirements.txt
 ### Environment Variables
 
 1. Create a `.env` file in the project root
-2. Add your OMDb API key:
+2. Add your API keys:
 ```
-OMDB_API_KEY=your_api_key_here
+OMDB_API_KEY=your_omdb_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ### Running the Application
@@ -141,21 +142,24 @@ pip freeze > requirements.txt
 - [x] Environment configuration with python-dotenv
 - [x] Movie poster display functionality using OMDb API
 - [x] Interactive UI with film reel icon and Courier font styling
-- [x] Multiple movie poster display (13 positions)
+- [x] Multiple movie poster display
 - [x] Visual enhancements (opacity, shadows, transitions)
+- [x] Movie input interface
+- [x] Gemini API integration
+- [x] Word cloud visualization
+- [x] Recommendation card display with movie details
+- [x] Local storage-based movie list management
+- [x] Responsive design optimization
 
-### In Progress
-- [ ] File upload interface for user collections
-- [ ] Data parsing system for uploaded files
-- [ ] ChatGPT API integration
-- [ ] Recommendation display interface
-- [ ] Visualization of recommendation insights
+### Recent Updates
+- [x] Improved text readability with expandable analysis section
+- [x] Enhanced movie cards with poster, rating, genre and plot
+- [x] Added personal movie list management
+- [x] Converted all UI text to English
+- [x] Optimized layout for various screen sizes
 
-### Next Steps
-1. Implement file upload functionality
-2. Develop data parsing system for different file formats
-3. Design and integrate ChatGPT prompts for recommendations
-4. Create interactive recommendation display
-5. Add visualization features for recommendation explanations
-
+### Known Issues
+- Movie poster images may occasionally fail to load
+- Some obscure movie titles may not be recognized correctly
+- Analysis text may become cut off on very small screens
 
