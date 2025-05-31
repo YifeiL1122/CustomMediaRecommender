@@ -302,11 +302,11 @@ header {
     -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
-/* Recommendations grid and card styles */
+/* Recommendations grid and card styles - 修改为支持更大海报 */
 .recommendations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
     margin-top: 1.5rem;
 }
 
@@ -320,6 +320,7 @@ header {
     flex-direction: column;
     height: 100%;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    min-height: 550px; /* 增加最小高度以容纳更大的海报 */
 }
 
 .recommendation-card:hover {
@@ -327,37 +328,52 @@ header {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* 修改海报容器样式 */
 .recommendation-poster {
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 300px; /* 增加海报高度从 150px 到 300px */
     background-color: #f0f0f0;
+    overflow: hidden;
 }
 
+/* 新增大海报样式 */
+.movie-poster-large {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 保持原有的小海报样式 */
 .movie-poster-small, .movie-poster-med {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+/* 调整占位符样式以适应更大的海报区域 */
 .poster-placeholder {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 4rem; /* 增加字体大小 */
     color: #999;
     background-color: #eee;
+    font-weight: bold;
 }
 
+/* 调整推荐详情区域的布局 */
 .recommendation-details {
-    padding: 1rem;
+    padding: 1.5rem; /* 增加内边距 */
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
+/* 调整电影标题和元信息的样式 */
 .recommendation-header {
     display: flex;
     flex-direction: column;
@@ -365,32 +381,35 @@ header {
 }
 
 .recommendation-header h4 {
-    margin: 0 0 0.25rem 0;
-    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.4rem; /* 增加标题字体大小 */
+    line-height: 1.3;
 }
 
 .movie-meta {
     display: flex;
-    gap: 0.8rem;
-    font-size: 0.8rem;
+    gap: 1rem;
+    font-size: 0.9rem;
     color: #666;
+    margin-bottom: 0.75rem;
 }
 
-/* Rating stars */
+/* Rating stars - 调整评分容器样式 */
 .movie-rating-container {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin: 0.5rem 0;
+    gap: 0.75rem;
+    margin: 0.75rem 0;
 }
 
 .rating-stars {
     display: flex;
+    gap: 2px;
 }
 
 .star {
     color: #f5c518; /* IMDb yellow */
-    font-size: 1rem;
+    font-size: 1.1rem; /* 稍微增加星星大小 */
     line-height: 1;
 }
 
@@ -399,63 +418,65 @@ header {
 }
 
 .rating-value {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
 }
 
-/* Genre tags */
+/* Genre tags - 调整类型标签样式 */
 .movie-genres {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 0.75rem;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .genre-tag {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
     background-color: #f0f0f0;
-    border-radius: 12px;
+    border-radius: 15px;
     white-space: nowrap;
     margin-bottom: 0.3rem;
 }
 
-/* Movie plot */
+/* Movie plot - 调整电影简介样式 */
 .movie-plot {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
     color: #333;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4; /* 增加显示行数 */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 4.2em;
+    max-height: 6rem; /* 相应增加最大高度 */
+    flex: 1; /* 让简介区域占用剩余空间 */
 }
 
-/* Action buttons */
+/* Action buttons - 调整操作按钮样式 */
 .recommendation-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.75rem;
     margin-top: auto;
+    padding-top: 1rem;
 }
 
 .action-btn {
     background: none;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    padding: 0.5rem 0.8rem;
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    font-size: 0.8rem;
+    gap: 0.5rem;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
     white-space: nowrap;
     flex: 1;
-    min-width: 120px;
+    min-width: 140px;
     justify-content: center;
 }
 
@@ -465,6 +486,7 @@ header {
 
 .action-btn:hover {
     background-color: #f5f5f5;
+    transform: translateY(-1px);
 }
 
 .action-btn.add-to-list {
@@ -490,26 +512,26 @@ header {
     font-weight: bold;
 }
 
-/* Movie badges */
+/* Movie badges - 调整徽章位置以适应更大的海报 */
 .movie-badges {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 0.75rem;
+    right: 0.75rem;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.5rem;
 }
 
 .badge {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 /* Lists button */
@@ -677,6 +699,18 @@ header {
     border-radius: 4px;
 }
 
+.movie-poster-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #999;
+    background-color: #eee;
+    font-weight: bold;
+}
+
 .movie-list-info {
     flex: 1;
 }
@@ -754,10 +788,32 @@ header {
     opacity: 0;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments - 响应式调整 */
 @media (max-width: 768px) {
     .recommendations-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .recommendation-card {
+        min-height: 500px;
+    }
+    
+    .recommendation-poster {
+        height: 250px;
+    }
+    
+    .poster-placeholder {
+        font-size: 3rem;
+    }
+    
+    .recommendation-header h4 {
+        font-size: 1.2rem;
+    }
+    
+    .movie-plot {
+        -webkit-line-clamp: 3;
+        max-height: 4.5rem;
     }
     
     .modal-container {
@@ -770,5 +826,33 @@ header {
     
     .movie-list-item {
         flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .recommendations-grid {
+        gap: 1rem;
+    }
+    
+    .recommendation-card {
+        min-height: 450px;
+    }
+    
+    .recommendation-poster {
+        height: 200px;
+    }
+    
+    .poster-placeholder {
+        font-size: 2.5rem;
+    }
+    
+    .recommendation-details {
+        padding: 1rem;
+    }
+    
+    .action-btn {
+        min-width: 120px;
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
     }
 }
