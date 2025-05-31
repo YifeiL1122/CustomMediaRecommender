@@ -1,59 +1,81 @@
-# Custom Media Recommender Website
+# Custom Movie Recommendation Website
 
-## Project Scope
-
-This project builds a personalized recommendation website for movies using user-entered favorite titles and Gemini AI's language capabilities. Users can enter their favorite movies, and the system generates tailored recommendations through the Gemini API. The recommendations are then displayed in an intuitive front-end interface, accompanied by visual explanations and a word cloud showing common themes.
+## Project Overview
+This project delivers a personalized movie recommendation website powered by Google’s Gemini AI and OMDb. Users can enter their favorite movies (or upload a simple list) and receive tailored suggestions along with visual explanations. The interface displays word clouds, interactive recommendation cards, and lets users manage personal watchlists—all within a responsive, engaging UI. 😊
 
 **Objectives:**
-- Enable personalized content recommendations through simple input.
-- Leverage AI language reasoning to reflect user taste.
-- Provide users with understandable and engaging recommendations.
-- Allow users to manage personal movie lists.
+- Generate personalized movie recommendations based on user-provided titles.
+- Leverage Gemini AI’s language reasoning to analyze common themes and styles.
+- Present recommendations in an intuitive, interactive interface with visual insights.
+- Allow users to maintain personal movie lists (watchlist / “not interested”).
+- Prepare the architecture for future enhancements (file uploads, authentication, music integration).
 
-**Boundaries:**
-- Focus on single-user interaction.
-- Supports direct input of movie titles.
-- No authentication, social features, or user accounts in the initial version.
+**Scope & Boundaries:**
+- Focus on single-user interaction (no multi-account system in v1).
+- Support direct movie-title input (three titles) for recommendations.
+- No user authentication or social sharing in the initial release.
+- Basic persistence via localStorage; database integration is planned later.
 
 ---
 
 ## Target Users
-
-- Movie enthusiasts who want to discover new films based on their taste.
-- Users who enjoy receiving smart, tailored suggestions from AI.
-- Non-technical users seeking simple and intuitive recommendation tools.
-
----
-
-## Features
-
-- **Movie Input Interface**  
-  Enter three favorite movies to receive personalized recommendations.
-
-- **AI-Powered Analysis**  
-  Google's Gemini AI analyzes common themes, styles, and elements across selected movies.
-
-- **Visual Word Cloud**  
-  Interactive word cloud showing key themes, genres, and elements from your selected movies.
-
-- **Interactive Recommendation Cards**  
-  Recommendations are shown in a visually clear card layout with movie posters, ratings, genres, and plot information.
-
-- **Personal Movie Lists**  
-  Add recommended movies to your watchlist or mark them as "not interested".
-
-- **Background Visual Elements**  
-  Dynamic movie poster background creates an immersive experience.
-
-- **Responsive Design**  
-  Works well on different screen sizes and devices.
+- Movie enthusiasts who keep personal lists of films they’ve watched.
+- Anyone looking to discover new movies based on their tastes.
+- Users who enjoy AI-generated insights and clear visual explanations.
+- Non-technical individuals seeking a simple, web‐based recommendation tool.
 
 ---
 
-## Timeline
+## Key Features
 
-| Week | Milestone                                               | Status |
-|------|---------------------------------------------------------|--------|
+1. **Movie Input Interface**  
+   - Users enter three favorite movie titles.
+   - Client-side validation to ensure valid inputs.
+
+2. **AI-Powered Analysis**  
+   - Google Gemini AI processes the entered titles.
+   - Extracts common themes, genres, and elements.
+
+3. **Recommendation Generation**  
+   - Gemini AI suggests five new movies with concise reasoning.
+   - OMDb API integration fetches posters and metadata (rating, genre, plot).
+
+4. **Visual Word Cloud**  
+   - ECharts-powered word cloud displays keywords from selected movies.
+   - Helps users see thematic overlaps at a glance.
+
+5. **Interactive Recommendation Cards**  
+   - Each card shows poster (300px height), title, genre, rating, and a short synopsis.
+   - Clickable cards expand to show more details and “Add to Watchlist” / “Not Interested” buttons.
+
+6. **Personal Movie Lists**  
+   - **Watchlist**: Add or remove recommended movies.
+   - **Not Interested**: Mark suggestions to exclude from future sessions.
+   - **List Management Modal**: View, filter, and manage all saved movies.
+   - **Status Tracking**: Visual indicators (e.g., icons or colored tags) show each movie’s status.
+
+7. **Dynamic Background Poster**  
+   - The landing page features a rotating background of user-selected or recommended movie posters, creating an immersive feel.
+
+8. **Responsive Design**  
+   - Optimized for both mobile and desktop.
+   - Smooth animations and hover effects (e.g., card elevation, image transitions).
+
+9. **Markdown Rendering**  
+   - Any textual explanations or analysis are rendered via marked.js for consistent formatting.
+
+10. **Technical Infrastructure**  
+    - **Backend:** Flask API endpoints handle movie search, Gemini prompts, and OMDb calls.
+    - **Session Management:** Client-side storage (localStorage) for user selections.
+    - **Error Handling:** Graceful fallbacks, user notifications for failed API calls.
+    - **Cross-Browser Compatibility:** Tested on Chrome, Firefox, Safari, and Edge.
+
+---
+
+## Timeline & Milestones
+
+| Week | Milestone                                               | Status      |
+| ---- | ------------------------------------------------------- | ----------- |
 | 1    | Research user needs and define Gemini prompt template   | ✅ Complete |
 | 2    | Implement input UI and build movie search functions     | ✅ Complete |
 | 3    | Integrate Gemini API and test recommendation logic      | ✅ Complete |
@@ -61,105 +83,13 @@ This project builds a personalized recommendation website for movies using user-
 | 5    | Add interactivity to recommendation cards               | ✅ Complete |
 | 6    | Implement personal movie lists and management           | ✅ Complete |
 | 7    | Conduct user testing and refine the interface           | ✅ Complete |
-| 8    | Final polishing and bug fixes                           | ✅ Complete |
+| 8    | Final polishing, deployment optimization, documentation | ✅ Complete |
 
 ---
 
-## Contact Information
+## Installation & Setup
 
-**Team Members:**
-
-- Jialu Huang
-*Email:* jhuang95@uw.edu
-- Suzy Liu
-*Email:* yifei92@uw.edu
-
----
-
-## Development Setup
-
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package installer)
-
-### Virtual Environment Setup
-
-1. Create a virtual environment:
-```bash
-python -m venv venv
-```
-
-2. Activate the virtual environment:
-
-On Windows:
-```bash
-.\venv\Scripts\activate
-```
-
-On macOS and Linux:
-```bash
-source venv/bin/activate
-```
-
-3. Install required packages:
-```bash
-pip install -r requirements.txt
-```
-
-### Environment Variables
-
-1. Create a `.env` file in the project root
-2. Add your API keys:
-```
-OMDB_API_KEY=your_omdb_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-### Running the Application
-
-1. Ensure your virtual environment is activated
-2. Start the Flask application:
-```bash
-python app.py
-```
-3. Open your browser and navigate to `http://localhost:5000`
-
-### Development Notes
-
-- Always keep your virtual environment activated while developing
-- After installing new packages, update requirements.txt:
-```bash
-pip freeze > requirements.txt
-```
-- Don't commit the `.env` file or the `venv` directory to version control
-
----
-
-## Progress Notes
-
-### Completed Features
-- [x] Basic Flask application setup
-- [x] Environment configuration with python-dotenv
-- [x] Movie poster display functionality using OMDb API
-- [x] Interactive UI with film reel icon and Courier font styling
-- [x] Multiple movie poster display
-- [x] Visual enhancements (opacity, shadows, transitions)
-- [x] Movie input interface
-- [x] Gemini API integration
-- [x] Word cloud visualization
-- [x] Recommendation card display with movie details
-- [x] Local storage-based movie list management
-- [x] Responsive design optimization
-
-### Recent Updates
-- [x] Improved text readability with expandable analysis section
-- [x] Enhanced movie cards with poster, rating, genre and plot
-- [x] Added personal movie list management
-- [x] Converted all UI text to English
-- [x] Optimized layout for various screen sizes
-
-### Known Issues
-- Movie poster images may occasionally fail to load
-- Some obscure movie titles may not be recognized correctly
-- Analysis text may become cut off on very small screens
-
+1. **Clone the Repository**  
+   ```bash
+   git clone https://github.com/your-username/movie-recommender.git
+   cd movie-recommender
