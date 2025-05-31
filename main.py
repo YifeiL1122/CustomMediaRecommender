@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
 import os
 import requests
+
+# 加载环境变量
+load_dotenv()
 
 app = Flask(__name__)
 
