@@ -6,7 +6,9 @@ import requests
 # 加载环境变量
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, 
+            template_folder='../templates',
+            static_folder='../static')
 
 @app.route('/')
 def index():
@@ -75,12 +77,4 @@ def analyze_movies():
         ]
     }
     
-    return jsonify(analysis_result)
-
-# Vercel需要这个作为WSGI应用入口点
-def handler(request):
-    return app(request.environ, lambda *args: None)
-
-# 本地开发时的入口点
-if __name__ == '__main__':
-    app.run(debug=True) 
+    return jsonify(analysis_result) 
