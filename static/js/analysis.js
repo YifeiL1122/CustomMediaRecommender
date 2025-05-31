@@ -1228,4 +1228,4 @@ window.addEventListener('load', () => {
         console.log('No movies found in sessionStorage');
         document.getElementById('analysisResult').textContent = 'No movies selected. Please go back and select at least three movies.';
     }
-}); 
+});
