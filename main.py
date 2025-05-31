@@ -8,6 +8,9 @@ load_dotenv()
 
 app = Flask(__name__)
 
+# 临时硬编码API密钥用于测试
+API_KEY = "d8a61810"
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -19,7 +22,7 @@ def analysis():
 @app.route('/api/search', methods=['GET'])
 def search_movies():
     query = request.args.get('query', '')
-    api_key = os.getenv("OMDB_API_KEY")
+    api_key = os.getenv("OMDB_API_KEY") or API_KEY
     
     if not api_key:
         return jsonify({"error": "API key not configured"}), 500
@@ -32,7 +35,7 @@ def search_movies():
 
 @app.route('/api/movie/<imdb_id>')
 def get_movie(imdb_id):
-    api_key = os.getenv("OMDB_API_KEY")
+    api_key = os.getenv("OMDB_API_KEY") or API_KEY
     
     if not api_key:
         return jsonify({"error": "API key not configured"}), 500
