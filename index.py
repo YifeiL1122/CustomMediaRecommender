@@ -77,6 +77,10 @@ def analyze_movies():
     
     return jsonify(analysis_result)
 
-# For Vercel
+# Vercel需要这个作为WSGI应用入口点
+def handler(request):
+    return app(request.environ, lambda *args: None)
+
+# 本地开发时的入口点
 if __name__ == '__main__':
     app.run(debug=True) 
