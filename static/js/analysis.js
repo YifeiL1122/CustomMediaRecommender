@@ -1,4 +1,4 @@
-// analysis.js - 修改版本
+// analysis.js - 最终修改版本
 
 // Get the stored movies from sessionStorage
 const movies = JSON.parse(sessionStorage.getItem('selectedMovies')) || [];
@@ -15,12 +15,10 @@ try {
 
 // Movie lists management module - IIFE
 (function() {
-    // Define list types
+    // Define list types - 只保留 watchlist 和 disliked
     const LIST_TYPES = {
         WATCHLIST: 'watchlist',
-        FAVORITES: 'favorites',
-        DISLIKED: 'disliked',
-        WATCHED: 'watched'
+        DISLIKED: 'disliked'
     };
     
     // Get movie list by type
@@ -104,12 +102,9 @@ try {
     window.dislikeMovie = function(movieTitle) {
         console.log(`Marking "${movieTitle}" as disliked`);
         
-        // If movie is in watchlist or favorites, remove it first
+        // If movie is in watchlist, remove it first
         if (isMovieInList(movieTitle, LIST_TYPES.WATCHLIST)) {
             removeMovieFromList(movieTitle, LIST_TYPES.WATCHLIST);
-        }
-        if (isMovieInList(movieTitle, LIST_TYPES.FAVORITES)) {
-            removeMovieFromList(movieTitle, LIST_TYPES.FAVORITES);
         }
         
         // Add to disliked list
@@ -123,80 +118,21 @@ try {
         }
     };
     
-    // Add to favorites
-    window.addToFavorites = function(movieTitle, movieDetails = null) {
-        console.log(`Adding "${movieTitle}" to favorites`);
-        
-        // If movie is in disliked list, remove it first
-        if (isMovieInList(movieTitle, LIST_TYPES.DISLIKED)) {
-            removeMovieFromList(movieTitle, LIST_TYPES.DISLIKED);
-        }
-        
-        // Add to favorites
-        if (addMovieToList(movieTitle, LIST_TYPES.FAVORITES)) {
-            // If we have details, store them too
-            if (movieDetails) {
-                // Get current stored movie details
-                const storedDetails = JSON.parse(localStorage.getItem('movieDetails') || '{}');
-                // Add or update details for this movie
-                storedDetails[movieTitle] = movieDetails;
-                localStorage.setItem('movieDetails', JSON.stringify(storedDetails));
-            }
-            
-            showNotification(`Added "${movieTitle}" to favorites`);
-            updateMovieCardStatus(movieTitle);
-            return true;
-        } else {
-            showNotification(`"${movieTitle}" is already in your favorites`);
-            return false;
-        }
-    };
-    
-    // Mark as watched
-    window.markAsWatched = function(movieTitle, movieDetails = null) {
-        console.log(`Marking "${movieTitle}" as watched`);
-        
-        // Add to watched list
-        if (addMovieToList(movieTitle, LIST_TYPES.WATCHED)) {
-            // If we have details, store them too
-            if (movieDetails) {
-                // Get current stored movie details
-                const storedDetails = JSON.parse(localStorage.getItem('movieDetails') || '{}');
-                // Add or update details for this movie
-                storedDetails[movieTitle] = movieDetails;
-                localStorage.setItem('movieDetails', JSON.stringify(storedDetails));
-            }
-            
-            showNotification(`Marked "${movieTitle}" as watched`);
-            updateMovieCardStatus(movieTitle);
-            return true;
-        } else {
-            showNotification(`"${movieTitle}" is already marked as watched`);
-            return false;
-        }
-    };
-    
     // Update movie card status
     window.updateMovieCardStatus = function(movieTitle) {
         // Find all cards related to this movie
         const cards = document.querySelectorAll(`.recommendation-card[data-movie="${encodeURIComponent(movieTitle)}"]`);
         
         cards.forEach(card => {
-            // Reset card classes
-            card.classList.remove('in-watchlist', 'in-favorites', 'disliked', 'watched');
+            // Reset card classes - 只保留需要的 class
+            card.classList.remove('in-watchlist', 'disliked');
             
             // Add appropriate classes
             if (isMovieInList(movieTitle, LIST_TYPES.WATCHLIST)) {
                 card.classList.add('in-watchlist');
             }
-            if (isMovieInList(movieTitle, LIST_TYPES.FAVORITES)) {
-                card.classList.add('in-favorites');
-            }
             if (isMovieInList(movieTitle, LIST_TYPES.DISLIKED)) {
                 card.classList.add('disliked');
-            }
-            if (isMovieInList(movieTitle, LIST_TYPES.WATCHED)) {
-                card.classList.add('watched');
             }
             
             // Update button states
@@ -250,52 +186,6 @@ try {
                     Not Interested
                 `;
                 dislikeBtn.classList.remove('active');
-            }
-        }
-        
-        // Update favorites button (if exists)
-        const favoriteBtn = card.querySelector('.action-btn.add-favorite');
-        if (favoriteBtn) {
-            if (isMovieInList(movieTitle, LIST_TYPES.FAVORITES)) {
-                favoriteBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                    </svg>
-                    Favorited
-                `;
-                favoriteBtn.classList.add('active');
-            } else {
-                favoriteBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-                    </svg>
-                    Favorite
-                `;
-                favoriteBtn.classList.remove('active');
-            }
-        }
-        
-        // Update watched button (if exists)
-        const watchedBtn = card.querySelector('.action-btn.mark-watched');
-        if (watchedBtn) {
-            if (isMovieInList(movieTitle, LIST_TYPES.WATCHED)) {
-                watchedBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    Watched
-                `;
-                watchedBtn.classList.add('active');
-            } else {
-                watchedBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                    Mark as Watched
-                `;
-                watchedBtn.classList.remove('active');
             }
         }
     }
@@ -504,13 +394,107 @@ async function addRecommendedMoviePosters(recommendedMovies) {
     }
 }
 
-// Format analysis text
+// Improved Markdown formatting function
 function formatAnalysisText(text) {
-    // Split text into paragraphs
-    const paragraphs = text.split(/\n\n|\.\s+(?=[A-Z])/g).filter(p => p.trim().length > 0);
+    if (!text) return '<p>No analysis available</p>';
     
-    // Create HTML with appropriate markup
-    return paragraphs.map(paragraph => `<p>${paragraph.trim()}</p>`).join('');
+    // Check if marked.js is available and use it for full Markdown parsing
+    if (typeof marked !== 'undefined') {
+        try {
+            // Configure marked options
+            marked.setOptions({
+                breaks: true,
+                gfm: true
+            });
+            return marked.parse(text);
+        } catch (error) {
+            console.error('Error parsing markdown with marked.js:', error);
+            // Fall back to custom parsing if marked.js fails
+        }
+    }
+    
+    // Custom Markdown-like parsing as fallback
+    let cleanText = text.trim();
+    
+    // Handle potential JSON format text first
+    if (cleanText.startsWith('{') && cleanText.endsWith('}')) {
+        try {
+            const parsed = JSON.parse(cleanText);
+            if (parsed.commonPoints) {
+                cleanText = parsed.commonPoints;
+            }
+        } catch (e) {
+            // If not valid JSON, continue with original text
+        }
+    }
+    
+    // Split into paragraphs (double newlines)
+    const paragraphs = cleanText.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+    
+    // Process each paragraph
+    const processedParagraphs = paragraphs.map(paragraph => {
+        let processed = paragraph.trim();
+        
+        // Handle headers (must be at start of paragraph)
+        if (processed.match(/^#{1,6}\s+/)) {
+            const headerMatch = processed.match(/^(#{1,6})\s+(.+)$/);
+            if (headerMatch) {
+                const level = Math.min(headerMatch[1].length, 6);
+                const title = headerMatch[2];
+                return `<h${level}>${title}</h${level}>`;
+            }
+        }
+        
+        // Handle unordered lists
+        if (processed.match(/^[\*\-\+]\s/m)) {
+            const listItems = processed
+                .split(/\n(?=[\*\-\+]\s)/)
+                .map(item => {
+                    const match = item.match(/^[\*\-\+]\s+(.+)$/s);
+                    return match ? `<li>${processInlineFormatting(match[1].trim())}</li>` : '';
+                })
+                .filter(item => item.length > 0);
+            return `<ul>${listItems.join('')}</ul>`;
+        }
+        
+        // Handle ordered lists
+        if (processed.match(/^\d+\.\s/m)) {
+            const listItems = processed
+                .split(/\n(?=\d+\.\s)/)
+                .map(item => {
+                    const match = item.match(/^\d+\.\s+(.+)$/s);
+                    return match ? `<li>${processInlineFormatting(match[1].trim())}</li>` : '';
+                })
+                .filter(item => item.length > 0);
+            return `<ol>${listItems.join('')}</ol>`;
+        }
+        
+        // Regular paragraph - process inline formatting and line breaks
+        processed = processInlineFormatting(processed);
+        processed = processed.replace(/\n/g, '<br>');
+        
+        return `<p>${processed}</p>`;
+    });
+    
+    return processedParagraphs.join('');
+}
+
+// Helper function to process inline formatting
+function processInlineFormatting(text) {
+    return text
+        // Bold text (**text** or __text__)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/__(.*?)__/g, '<strong>$1</strong>')
+        
+        // Italic text (*text* or _text_) - but avoid conflicts with already processed bold
+        .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>')
+        .replace(/(?<!_)_([^_]+)_(?!_)/g, '<em>$1</em>')
+        
+        // Code blocks (`code`)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        
+        // Simple links [text](url)
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
 }
 
 // Format recommendation reason
@@ -574,8 +558,10 @@ function createRatingStars(rating) {
 function updateUIWithRecommendations(analysisResult) {
     console.log('Updating UI with enhanced recommendations:', analysisResult.recommendations);
     
-    // Format analysis text
+    // Format analysis text with improved Markdown support
     const formattedAnalysis = formatAnalysisText(analysisResult.commonPoints || 'No analysis available');
+    console.log('Original analysis text:', analysisResult.commonPoints);
+    console.log('Formatted analysis text:', formattedAnalysis);
     
     // Format movie recommendations with details
     const recommendationsHtml = analysisResult.recommendations
@@ -591,30 +577,24 @@ function updateUIWithRecommendations(analysisResult) {
             // Create star rating display
             const stars = createRatingStars(details.imdbRating);
             
-            // Check movie status in various lists
+            // Check movie status in various lists - 只检查 watchlist 和 disliked
             const inWatchlist = window.MovieLists && window.MovieLists.isInList(rec.title, window.MovieLists.types.WATCHLIST);
-            const inFavorites = window.MovieLists && window.MovieLists.isInList(rec.title, window.MovieLists.types.FAVORITES);
             const isDisliked = window.MovieLists && window.MovieLists.isInList(rec.title, window.MovieLists.types.DISLIKED);
-            const isWatched = window.MovieLists && window.MovieLists.isInList(rec.title, window.MovieLists.types.WATCHED);
             
-            // Build HTML with data attributes and status classes - using card layout
+            // Build HTML with data attributes and status classes - 使用更高的卡片布局显示海报
             return `
                 <div class="recommendation-card ${inWatchlist ? 'in-watchlist' : ''} 
-                                             ${inFavorites ? 'in-favorites' : ''} 
-                                             ${isDisliked ? 'disliked' : ''}
-                                             ${isWatched ? 'watched' : ''}"
+                                             ${isDisliked ? 'disliked' : ''}"
                      data-movie="${encodeURIComponent(rec.title)}"
                      data-imdbid="${details.imdbID || ''}">
                     <div class="recommendation-poster">
                         ${details.Poster && details.Poster !== 'N/A' ? 
-                            `<img src="${details.Poster}" alt="${rec.title} poster" class="movie-poster-small">` : 
+                            `<img src="${details.Poster}" alt="${rec.title} poster" class="movie-poster-large">` : 
                             `<div class="poster-placeholder">${rec.title.charAt(0)}</div>`
                         }
                         
                         <div class="movie-badges">
                             ${inWatchlist ? '<span class="badge watchlist-badge" title="In Watchlist">📋</span>' : ''}
-                            ${inFavorites ? '<span class="badge favorite-badge" title="Favorited">❤️</span>' : ''}
-                            ${isWatched ? '<span class="badge watched-badge" title="Watched">👁️</span>' : ''}
                             ${isDisliked ? '<span class="badge disliked-badge" title="Not Interested">✕</span>' : ''}
                         </div>
                     </div>
@@ -737,20 +717,18 @@ function updateUIWithRecommendations(analysisResult) {
     addRecommendedMoviePosters(analysisResult.recommendations);
 }
 
-// Show movie list management modal
+// Show movie list management modal - 只保留 watchlist 和 disliked
 function showWatchlistModal() {
     console.log('Showing watchlist modal');
     
-    // Get all list types
+    // Get list types - 只获取两个列表
     const watchlist = window.MovieLists.get(window.MovieLists.types.WATCHLIST);
-    const favorites = window.MovieLists.get(window.MovieLists.types.FAVORITES);
-    const watched = window.MovieLists.get(window.MovieLists.types.WATCHED);
     const disliked = window.MovieLists.get(window.MovieLists.types.DISLIKED);
     
     // Get stored movie details
     const storedDetails = JSON.parse(localStorage.getItem('movieDetails') || '{}');
     
-    // Create modal HTML
+    // Create modal HTML - 只有两个标签页
     const modalHtml = `
         <div class="modal-overlay">
             <div class="modal-container">
@@ -761,20 +739,12 @@ function showWatchlistModal() {
                 
                 <div class="modal-tabs">
                     <button class="modal-tab active" data-tab="watchlist">Watchlist (${watchlist.length})</button>
-                    <button class="modal-tab" data-tab="favorites">Favorites (${favorites.length})</button>
-                    <button class="modal-tab" data-tab="watched">Watched (${watched.length})</button>
                     <button class="modal-tab" data-tab="disliked">Not Interested (${disliked.length})</button>
                 </div>
                 
                 <div class="modal-content">
                     <div class="modal-tab-content active" id="watchlist-content">
                         ${generateMovieListHtml(watchlist, storedDetails)}
-                    </div>
-                    <div class="modal-tab-content" id="favorites-content">
-                        ${generateMovieListHtml(favorites, storedDetails)}
-                    </div>
-                    <div class="modal-tab-content" id="watched-content">
-                        ${generateMovieListHtml(watched, storedDetails)}
                     </div>
                     <div class="modal-tab-content" id="disliked-content">
                         ${generateMovieListHtml(disliked, storedDetails)}
@@ -875,17 +845,11 @@ function addMovieItemEventListeners(modalElement) {
             const movieTitle = decodeURIComponent(btn.dataset.movie);
             const activeTab = modalElement.querySelector('.modal-tab.active').dataset.tab;
             
-            // Determine which list to remove from based on active tab
+            // Determine which list to remove from based on active tab - 只有两种情况
             let listType;
             switch(activeTab) {
                 case 'watchlist':
                     listType = window.MovieLists.types.WATCHLIST;
-                    break;
-                case 'favorites':
-                    listType = window.MovieLists.types.FAVORITES;
-                    break;
-                case 'watched':
-                    listType = window.MovieLists.types.WATCHED;
                     break;
                 case 'disliked':
                     listType = window.MovieLists.types.DISLIKED;
@@ -944,17 +908,13 @@ function addMovieItemEventListeners(modalElement) {
     });
 }
 
-// Update tab counts
+// Update tab counts - 只更新两个标签页
 function updateTabCounts(modalElement) {
     const watchlist = window.MovieLists.get(window.MovieLists.types.WATCHLIST);
-    const favorites = window.MovieLists.get(window.MovieLists.types.FAVORITES);
-    const watched = window.MovieLists.get(window.MovieLists.types.WATCHED);
     const disliked = window.MovieLists.get(window.MovieLists.types.DISLIKED);
     
-    // Update tab text
+    // Update tab text - 只有两个标签页
     modalElement.querySelector('.modal-tab[data-tab="watchlist"]').textContent = `Watchlist (${watchlist.length})`;
-    modalElement.querySelector('.modal-tab[data-tab="favorites"]').textContent = `Favorites (${favorites.length})`;
-    modalElement.querySelector('.modal-tab[data-tab="watched"]').textContent = `Watched (${watched.length})`;
     modalElement.querySelector('.modal-tab[data-tab="disliked"]').textContent = `Not Interested (${disliked.length})`;
 }
 
