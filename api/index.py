@@ -6,7 +6,13 @@ import requests
 # 加载环境变量
 load_dotenv()
 
-app = Flask(__name__)
+# 获取项目根目录路径
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 创建Flask应用，指定模板和静态文件路径
+app = Flask(__name__, 
+            template_folder=os.path.join(project_root, 'templates'),
+            static_folder=os.path.join(project_root, 'static'))
 
 @app.route('/')
 def index():
@@ -78,4 +84,4 @@ def analyze_movies():
     return jsonify(analysis_result)
 
 # Vercel serverless handler
-handler = app 
+app.config['DEBUG'] = False 
