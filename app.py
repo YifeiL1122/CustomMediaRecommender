@@ -77,5 +77,6 @@ def analyze_movies():
     
     return jsonify(analysis_result)
 
+# Vercel需要这个变量
 if __name__ == '__main__':
     app.run(debug=True)
